@@ -1,0 +1,40 @@
+CREATE DATABASE SATURNO
+use saturno
+
+create table categoria_producto(
+	id_categoria int not null primary key identity (1,1),    
+	nombre_categoria VARCHAR(30) not null
+);
+
+create table productos(
+	id_producto int not null primary key identity (1,1),    
+	nombre_producto VARCHAR(50) not null,
+	codigo_producto VARCHAR(100) not null,
+	descripcion_producto VARCHAR(50) not null,
+	precio_unitario numeric (4,2) not null,
+	id_categoria int not null,
+	categoria_producto int not null references categoria_producto(id_categoria)
+);
+
+create table detalle_compra( 
+	id_detalle int not null primary key identity (1,1),    
+	cantidad int,
+	valor_neto numeric (4,2) not null,
+	precio_total numeric (4,2) not null,
+	valor_iva numeric (4,2) not null,
+	id_producto int not null,
+	productos int not null references productos(id_producto)
+);
+
+create table compra( 
+	id_compra int not null primary key identity (1,1),    
+	no_documento int,
+	serie_documento VARCHAR(9) not null,
+	fecha date not null,
+	nombre_propietario VARCHAR(100) not null,
+	nrc VARCHAR(22) not null,
+	nit VARCHAR(17) not null, 
+	notas VARCHAR(200) not null,
+	id_detalle int not null,
+	detalle_compra int not null references detalle_compra(id_detalle)
+);
